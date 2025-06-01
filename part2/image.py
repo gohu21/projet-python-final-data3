@@ -11,6 +11,17 @@ def rogner_image_entete(chemin_source, chemin_sortie, hauteur_crop=130):
 
     image_cropped.save(chemin_sortie)
 
+def coller_logo_sur_image(image_fond_path, logo_path, sortie_path, angle=180):
+
+    fond = Image.open(image_fond_path).convert("RGBA")
+    logo = Image.open(logo_path).convert("RGBA")
+    logo = logo.rotate(angle, expand=True)
+    logo = logo.resize((80, 80))
+
+    position = (fond.width - logo.width - 0, 0)
+
+    fond.paste(logo, position, mask=logo)
+    fond.convert("RGB").save(sortie_path)
 
 # Test direct
 if __name__ == "__main__":
